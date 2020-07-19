@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展示</title>
+</head>
+<body>
+<h1>展示</h1>
+<table border="1">
+    {% for foo in friends %}
+        <tr {% if loop.last %}
+            style="background-color: palegoldenrod"
+        {% endif %}>
+            <td>{{ loop.revindex }}</td>
+            <td>{{ foo }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+用戶共: {{ friends | length }} 人
+{{ msg | safe }}
+{{ friends[0] | capitalize }}
+{{ '%s is %d' | format('lily',185) }}
+{{ 'hrllo 123' | truncate(4) }}
+
+{{ friends | first }}
+{{ friends | length }}
+<br>
+{{ [1,3,2] | sort}}
+
+<br>
+
+{% for d in dict.values() %}
+    {{ d }}
+{% endfor %}
+
+<br>
+{% for d in dict.items() %}
+    {{ d }}
+{% endfor %}
+
+{{ 'hello you' | replace_hello}}
+
+{{ [1,2,3] | list_r}}
+</body>
+</html>

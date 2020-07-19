@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}首頁{% endblock %}</title>
+</head>
+<body>
+<div id="head">
+    <ul>
+        <li>首頁</li>
+        <li>會員</li>
+        <li></li>
+    </ul>
+</div>
+<div id="middle">
+    {% block middle %}
+        中間
+    {% endblock %}
+</div>
+<div id="footer"></div>
+</body>
+</html>

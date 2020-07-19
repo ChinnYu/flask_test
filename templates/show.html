@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展示</title>
+</head>
+<body>
+<h1>展示</h1>
+<table border="1">
+
+
+    {% for foo in friends %}
+            <tr {% if loop.last %}
+                style="background-color: palegoldenrod"
+            {% endif %}>
+                <td>{{ loop.revindex }}</td>
+                <td>{{ foo }}</td>
+            </tr>
+    {% endfor %}
+
+
+
+
+
+</table>
+
+<ul>
+    {% for friend in friends %}
+        {% if friend|length >= 3%}
+            <li>{{ friend }}</li>
+        {% else %}
+            <li>{{ friend }}</li>
+        {% endif %}
+    {% endfor %}
+
+</ul>
+{{ name }}
+{{ friends.0 }}
+{{ dict.gift }}
+{{ g.name }}
+</body>
+</html>
