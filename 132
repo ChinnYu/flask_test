@@ -1,1 +1,55 @@
-test
+import ftputil
+import os
+
+class MyFtp():
+    ftp = None
+    bIsDir = False
+    path = ""
+    bufsize = 1024
+
+    def __init__(self, host="", port=21, username="", password=''):
+        # self.ftp.set_debuglevel(2)
+        self.host = host
+        self.port = port
+        self.username = username
+        self.password = password
+        self.ftp = ftputil.FTPHost("hyftp001", "auo\\usrl3di2", 'IIIXXXITsoo@')
+        print(self.ftp.getcwd())
+
+
+    def DownLoadFile(self, LocalFile, RemoteFile):
+        self.ftp.download(RemoteFile, LocalFile)
+        print('download file complete', LocalFile)
+        return
+
+    def DownLoadFileTree(self, LocalDir, RemoteDir):
+        if os.path.isdir(LocalDir) == False:
+            os.makedirs(LocalDir)
+        self.ftp.chdir(RemoteDir)
+        remote_names = self.ftp.listdir(self.ftp.curdir)
+        print(remote_names)
+        for file in remote_names:
+            local = os.path.join(LocalDir, file)
+            if self.ftp.path.isdir(file):
+                self.DownLoadFileTree(local, file)
+            else:
+                # print(local)
+                self.DownLoadFile(local, file)
+        self.ftp.chdir("..")
+        return
+
+    def close(self):
+        self.ftp.close()
+
+
+if __name__ == "__main__":
+    ftp = None
+    try:
+        ftp = MyFtp('', 21,"", '')
+        ftp.DownLoadFileTree('./data/data/', '')  # ok
+        # ftp.DownLoadFileTree('./data/data/pic/', '')  # ok
+        ftp.close()
+    except Exception as e:
+        print(e)
+        ftp.close()
+    print("ok!")
