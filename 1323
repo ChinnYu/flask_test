@@ -1,0 +1,224 @@
+<template>
+    <div class="hpp" ref="htree" id="htree">
+    </div>
+</template>
+
+<script>
+
+// import * as d3 from "d3";
+import * as d3 from "d3v4";
+export default {
+  name: "htree",
+  data () {
+    return {
+      margin: null,
+      width: null,
+      height: null,
+      svg: null,
+      treemap: null,
+      i: null,
+      duration: null,
+      root: null,
+      treeData: { "name": "Top Level", "children": [{ "name": "91.08B29.220", "children": [{ "name": "90.08B29.009" }, { "name": "51.08B27.Z02" }] }, { "name": "90.08B29.009", "children": [{ "name": "57.08B29.009" }, { "name": "57.08B29.010" }, { "name": "53.08B29.Y03" }, { "name": "46.I1287.UC5" }] }, { "name": "57.08B29.009", "children": [{ "name": "66.T1K29.306" }, { "name": "66.C1K38.302" }, { "name": "57.08B29.A10" }, { "name": "57.08B29.A11" }, { "name": "57.08B29.A12" }, { "name": "57.08B29.A24" }, { "name": "57.08B29.A25" }, { "name": "57.08B29.A26" }, { "name": "57.08B29.A30" }] }, { "name": "57.08B29.A10", "children": [{ "name": "57.08B29.A08" }, { "name": "57.08B29.A09" }, { "name": "57.08B29.A23" }] }, { "name": "57.08B29.A08", "children": [{ "name": "68.21410.013" }, { "name": "68.21410.014" }, { "name": "68.21410.017" }, { "name": "68.36400.003" }, { "name": "67.24097.010" }, { "name": "67.24000.008" }, { "name": "57.08B29.A07" }, { "name": "57.08B29.A22" }] }, { "name": "57.08B29.A07", "children": [{ "name": "57.08B29.A13" }] }, { "name": "57.08B29.A13", "children": [{ "name": "68.24500.085" }, { "name": "68.23500.049" }, { "name": "68.21210.002" }, { "name": "65.22060.023" }, { "name": "65.21010.015" }, { "name": "64.0AK16.A09" }, { "name": "64.0AK16.A04" }, { "name": "64.EAK16.A06" }, { "name": "52.08B27.001" }] }, { "name": "64.0AK16.A09", "children": [{ "name": "63.31076.201" }, { "name": "63.35076.D01" }, { "name": "45.CA020.212" }, { "name": "45.CA001.008" }] }, { "name": "45.CA020.212", "children": [{ "name": "68.3D100.106" }, { "name": "68.3D100.058" }, { "name": "68.3D100.020" }, { "name": "68.3D100.012" }, { "name": "68.3D100.001" }] }, { "name": "45.CA001.008", "children": [{ "name": "68.3D100.079" }, { "name": "68.38100.001" }, { "name": "68.21110.043" }, { "name": "68.38100.007" }, { "name": "68.21410.012" }, { "name": "68.21140.037" }, { "name": "68.21120.172" }, { "name": "68.21120.139" }, { "name": "68.21120.137" }, { "name": "68.21140.033" }] }, { "name": "64.0AK16.A04", "children": [{ "name": "45.CA001.009" }] }, { "name": "45.CA001.009", "children": [{ "name": "68.3D100.119" }] }, { "name": "52.08B27.001", "children": [{ "name": "63.31076.D01" }, { "name": "45.AA0AF.L14" }] }, { "name": "45.AA0AF.L14", "children": [{ "name": "68.22720.046" }, { "name": "68.22720.029" }, { "name": "68.22720.034" }, { "name": "68.22420.001" }, { "name": "68.22710.028" }, { "name": "68.22620.001" }, { "name": "68.22710.015" }, { "name": "68.22220.022" }, { "name": "68.22220.001" }, { "name": "68.12200.002" }, { "name": "68.21310.010" }, { "name": "68.21220.079" }, { "name": "68.21220.010" }, { "name": "68.21220.074" }, { "name": "68.21220.006" }, { "name": "68.21120.140" }, { "name": "68.21110.032" }, { "name": "68.21120.001" }, { "name": "68.21110.041" }, { "name": "68.11100.012" }, { "name": "68.11100.052" }, { "name": "68.21120.053" }, { "name": "68.1C100.001" }, { "name": "68.21140.004" }, { "name": "68.19200.003" }, { "name": "68.21220.007" }, { "name": "68.17200.007" }, { "name": "68.19200.004" }, { "name": "68.21220.072" }, { "name": "68.12700.010" }, { "name": "68.12700.004" }, { "name": "68.12700.002" }, { "name": "67.27000.014" }, { "name": "67.27000.006" }, { "name": "67.27000.007" }, { "name": "67.27000.054" }, { "name": "67.27101.001" }, { "name": "67.27101.002" }, { "name": "67.27101.003" }, { "name": "67.25000.043" }, { "name": "67.25000.007" }, { "name": "67.25000.008" }, { "name": "67.25101.001" }, { "name": "67.25101.002" }, { "name": "67.25102.003" }, { "name": "67.24000.099" }, { "name": "67.24000.048" }, { "name": "67.24000.049" }, { "name": "67.24000.098" }, { "name": "67.24000.104" }, { "name": "67.24000.105" }, { "name": "67.24100.001" }, { "name": "67.24102.005" }, { "name": "67.2410F.001" }] }, { "name": "57.08B29.A09", "children": [{ "name": "57.08B29.A06" }] }, { "name": "53.08B29.Y03", "children": [{ "name": "65.41030.006" }, { "name": "47.COG31.015" }, { "name": "47.COG31.008" }] }, { "name": "51.08B27.Z02", "children": [{ "name": "84.08B27.002" }, { "name": "84.08B27.V01" }, { "name": "84.08B27.001" }, { "name": "84.08B27.V02" }, { "name": "84.07B04.019" }, { "name": "84.07B04.V04" }, { "name": "84.02A02.007" }, { "name": "84.08B13.V05" }, { "name": "84.02A02.006" }, { "name": "84.08B13.V04" }, { "name": "84.02A02.005" }, { "name": "84.08B13.V03" }, { "name": "82.15B06.004" }, { "name": "82.01A01.002" }, { "name": "81.01A09.010" }, { "name": "81.01A09.003" }, { "name": "80.00000.079" }, { "name": "80.00000.078" }, { "name": "79.01A10.001" }] }] }
+    };
+  },
+  methods: {
+    collapse (d) {
+      let vm = this;
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(vm.collapse);
+        d.children = null;
+      }
+    },
+
+    diagonal (s, d) { // Creates a curved (diagonal) path from parent to the child nodes
+      let path = `M ${s.y} ${s.x}
+            C ${(s.y + d.y) / 2} ${s.x},
+              ${(s.y + d.y) / 2} ${d.x},
+              ${d.y} ${d.x}`;
+
+      return path;
+    },
+    click (d) { // Toggle children on click.
+      let vm = this;
+      if (d.children) {
+        d._children = d.children;
+        d.children = null;
+      } else {
+        d.children = d._children;
+        d._children = null;
+      }
+      vm.update(d);
+    },
+    update (source) {
+      let vm = this;
+      // Assigns the x and y position for the nodes
+      let treeData = vm.treemap(vm.root);
+
+      // Compute the new tree layout.
+      let nodes = treeData.descendants();
+      let links = treeData.descendants().slice(1);
+
+      // Normalize for fixed-depth.
+      nodes.forEach(function (d) { d.y = d.depth * 180; });
+
+      // ****************** Nodes section ***************************
+
+      // Update the nodes...
+      let node = vm.svg.selectAll("g.node")
+        .data(nodes, function (d) { return d.id || (d.id = ++vm.i); });
+
+      // Enter any new modes at the parent's previous position.
+      let nodeEnter = node.enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function (d) {
+          return "translate(" + source.y0 + "," + source.x0 + ")";
+        })
+        .on("click", vm.click);
+
+      // Add Circle for the nodes
+      nodeEnter.append("circle")
+        .attr("class", "node")
+        .attr("r", 1e-6)
+        .style("fill", function (d) {
+          return d._children ? "lightsteelblue" : "#fff";
+        });
+
+      // Add labels for the nodes
+      nodeEnter.append("text")
+        .attr("dy", ".35em")
+        .attr("x", function (d) {
+          return d.children || d._children ? -13 : 13;
+        })
+        .attr("text-anchor", function (d) {
+          return d.children || d._children ? "end" : "start";
+        })
+        .text(function (d) { return d.data.name; });
+
+      // UPDATE
+      let nodeUpdate = nodeEnter.merge(node);
+
+      // Transition to the proper position for the node
+      nodeUpdate.transition()
+        .duration(vm.duration)
+        .attr("transform", function (d) {
+          return "translate(" + d.y + "," + d.x + ")";
+        });
+
+      // Update the node attributes and style
+      nodeUpdate.select("circle.node")
+        .attr("r", 10)
+        .style("fill", function (d) {
+          return d._children ? "lightsteelblue" : "#fff";
+        })
+        .attr("cursor", "pointer");
+
+      // Remove any exiting nodes
+      let nodeExit = node.exit().transition()
+        .duration(vm.duration)
+        .attr("transform", function (d) {
+          return "translate(" + source.y + "," + source.x + ")";
+        })
+        .remove();
+
+      // On exit reduce the node circles size to 0
+      nodeExit.select("circle")
+        .attr("r", 1e-6);
+
+      // On exit reduce the opacity of text labels
+      nodeExit.select("text")
+        .style("fill-opacity", 1e-6);
+
+      // ****************** links section ***************************
+
+      // Update the links...
+      let link = vm.svg.selectAll("path.link")
+        .data(links, function (d) { return d.id; });
+
+      // Enter any new links at the parent's previous position.
+      let linkEnter = link.enter().insert("path", "g")
+        .attr("class", "link")
+        .attr("d", function (d) {
+          let o = { x: source.x0, y: source.y0 };
+          return vm.diagonal(o, o);
+        });
+
+      // UPDATE
+      let linkUpdate = linkEnter.merge(link);
+
+      // Transition back to the parent element position
+      linkUpdate.transition()
+        .duration(vm.duration)
+        .attr("d", function (d) { return vm.diagonal(d, d.parent); });
+
+      // Remove any exiting links
+      let linkExit = link.exit().transition()
+        .duration(vm.duration)
+        .attr("d", function (d) {
+          let o = { x: source.x, y: source.y };
+          return vm.diagonal(o, o);
+        })
+        .remove();
+
+      // Store the old positions for transition.
+      nodes.forEach(function (d) {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+  },
+  mounted () {
+    let vm = this;
+    // let treeData =
+    // Set the dimensions and margins of the diagram
+    vm.margin = { top: 20, right: 90, bottom: 30, left: 90 };
+    vm.width = 960 - vm.margin.left - vm.margin.right;
+    vm.height = 500 - vm.margin.top - vm.margin.bottom;
+
+    // append the svg object to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    vm.svg = d3.select("body").append("svg")
+      .attr("width", vm.width + vm.margin.right + vm.margin.left)
+      .attr("height", vm.height + vm.margin.top + vm.margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" +
+        vm.margin.left + "," + vm.margin.top + ")");
+
+    vm.i = 0;
+    vm.duration = 750;
+    vm.root = null;
+
+    // declares a tree layout and assigns the size
+    vm.treemap = d3.tree().size([vm.height, vm.width]);
+    // Assigns parent, children, height, depth
+    vm.root = d3.hierarchy(vm.treeData, function (d) { return d.children; });
+    vm.root.x0 = vm.height / 2;
+    vm.root.y0 = 0;
+
+    // Collapse after the second level
+    vm.root.children.forEach(vm.collapse);
+    vm.update(vm.root);
+  }
+};
+</script>
+
+<style scoped>
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 12px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+</style>
